@@ -1,0 +1,3 @@
+void static quit() {
+    
+}
