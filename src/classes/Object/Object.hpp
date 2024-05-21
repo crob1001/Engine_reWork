@@ -5,8 +5,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "../Texture/Texture.hpp"
-#include "../Shader/Shader.h"
+#include "../../texture.h"
+#include "../../functs/textureFuncts.h"
+#include "../../shader.h"
+#include "../../functs/shaderFuncts.h"
 #include "../VertArray/VertArray.hpp"
 
 class Object {

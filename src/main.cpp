@@ -34,12 +34,15 @@ enum MODE {
     TOTAL
 };
 
+
 #include "functs/init/init.hpp"
 // #include "functs/readFile/readFile.hpp"
 
 #include "Camera.h"
-#include "classes/Shader/Shader.h"
-#include "classes/Texture/Texture.hpp"
+#include "shader.h"
+#include "functs/shaderFuncts.h"
+#include "texture.h"
+#include "functs/textureFuncts.h"
 #include "classes/Object/Object.hpp"
 
 #include "classes/LightCube/LightCube.hpp"
@@ -72,8 +75,8 @@ int main(int argc, char* argv[]) {
 
     // stbi_set_flip_vertically_on_load(true);
 
-    Shader lightingShader("shaders/multiple_lights.vert", "shaders/multiple_lights.frag");
-    Shader lightCubeShader("shaders/light_cube.vert", "shaders/light_cube.frag");
+    Shader lightingShader = compileShader("shaders/multiple_lights.vert", "shaders/multiple_lights.frag");
+    Shader lightCubeShader = compileShader("shaders/light_cube.vert", "shaders/light_cube.frag");
 
     VertBuffer VBOR = VertBuffer();
     VertArray cubeVAO = VertArray();
@@ -112,20 +115,20 @@ int main(int argc, char* argv[]) {
     // load textures (we now use a utility function to keep the code more organized)
     // -----------------------------------------------------------------------------
 
-    Texture* diffuseMap = new Texture("textures/container2.png");
-    Texture* specularMap = new Texture("textures/container2_specular.png");
+    Texture diffuseMap = createTexture("textures/container2.png", true);
+    Texture specularMap = createTexture("textures/container2_specular.png", true);
 
     Object objList[] = {
-        Object(&cubeVAO, 36, glm::vec3(0.0f,  0.0f,  0.0f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3( 2.0f, 5.0f,  -15.0f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3(-1.5f, -2.2f, -2.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3(-3.8f, -2.0f, -12.3f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3( 2.4f, -0.4f, -3.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3(-1.7f, 3.0f,  -7.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3( 1.3f, -2.0f, -2.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3( 1.5f, 2.0f,  -2.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3( 1.5f, 0.2f,  -1.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap),
-        Object(&cubeVAO, 36, glm::vec3(-1.3f, 1.0f,  -1.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), diffuseMap, specularMap)
+        Object(&cubeVAO, 36, glm::vec3(0.0f,  0.0f,  0.0f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3( 2.0f, 5.0f,  -15.0f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3(-1.5f, -2.2f, -2.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3(-3.8f, -2.0f, -12.3f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3( 2.4f, -0.4f, -3.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3(-1.7f, 3.0f,  -7.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3( 1.3f, -2.0f, -2.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3( 1.5f, 2.0f,  -2.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3( 1.5f, 0.2f,  -1.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap),
+        Object(&cubeVAO, 36, glm::vec3(-1.3f, 1.0f,  -1.5f), 1.2, glm::vec3(0.0f,  0.0f,  0.0f), &diffuseMap, &specularMap)
     };
 
     LightCube lightCubeList[] = {
@@ -144,9 +147,9 @@ int main(int argc, char* argv[]) {
 
     // shader configuration
     // --------------------
-    lightingShader.use();
-    lightingShader.setInt("material.diffuse", 0);
-    lightingShader.setInt("material.specular", 1);
+    use(lightingShader);
+    setInt(lightingShader, "material.diffuse", 0);
+    setInt(lightingShader, "material.specular", 1);
 
     // for (Object i : objList) {
     //     i.scale(.5);
@@ -172,9 +175,9 @@ int main(int argc, char* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // be sure to activate shader when setting uniforms/drawing objects
-        lightingShader.use();
-        lightingShader.setVec3("viewPos", camera.Position);
-        lightingShader.setFloat("material.shininess", 32.0f);
+        use(lightingShader);
+        setVec3(lightingShader, "viewPos", camera.Position);
+        setFloat(lightingShader, "material.shininess", 32.0f);
 
         /*
            Here we set all the uniforms for the 5/6 types of lights we have. We have to set them manually and index 
@@ -183,52 +186,52 @@ int main(int argc, char* argv[]) {
            by using 'Uniform buffer objects', but that is something we'll discuss in the 'Advanced GLSL' tutorial.
         */
         // directional light
-        lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-        lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-        lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-        lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+        setVec3(lightingShader, "dirLight.direction", -0.2f, -1.0f, -0.3f);
+        setVec3(lightingShader, "dirLight.ambient", 0.05f, 0.05f, 0.05f);
+        setVec3(lightingShader, "dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+        setVec3(lightingShader, "dirLight.specular", 0.5f, 0.5f, 0.5f);
 
         for (unsigned int i = 0; i < 4; i++) {
-            lightingShader.setVec3("pointLights[" + std::to_string(i) + "].position", lightCubeList[i].pos);
-            lightingShader.setVec3("pointLights[" + std::to_string(i) + "].ambient", lightCubeList[i].ambient);
-            lightingShader.setVec3("pointLights[" + std::to_string(i) + "].diffuse", lightCubeList[i].diffuse);
-            lightingShader.setVec3("pointLights[" + std::to_string(i) + "].specular", lightCubeList[i].specular);
-            lightingShader.setFloat("pointLights[" + std::to_string(i) + "].constant", lightCubeList[i].constant);
-            lightingShader.setFloat("pointLights[" + std::to_string(i) + "].linear", lightCubeList[i].linear);
-            lightingShader.setFloat("pointLights[" + std::to_string(i) + "].quadratic", lightCubeList[i].quadratic);
+            setVec3(lightingShader, "pointLights[" + std::to_string(i) + "].position", lightCubeList[i].pos);
+            setVec3(lightingShader, "pointLights[" + std::to_string(i) + "].ambient", lightCubeList[i].ambient);
+            setVec3(lightingShader, "pointLights[" + std::to_string(i) + "].diffuse", lightCubeList[i].diffuse);
+            setVec3(lightingShader, "pointLights[" + std::to_string(i) + "].specular", lightCubeList[i].specular);
+            setFloat(lightingShader, "pointLights[" + std::to_string(i) + "].constant", lightCubeList[i].constant);
+            setFloat(lightingShader, "pointLights[" + std::to_string(i) + "].linear", lightCubeList[i].linear);
+            setFloat(lightingShader, "pointLights[" + std::to_string(i) + "].quadratic", lightCubeList[i].quadratic);
         }
         
         // spotLight
         // lightingShader.setVec3("spotLight.position", camera.Position);
         // lightingShader.setVec3("spotLight.direction", camera.Front);
-        lightingShader.setVec3("spotLight.position", 0.0f, 0.0f, 3.0f);
-        lightingShader.setVec3("spotLight.direction", 0.0f, 0.0f, -1.0f);
-        lightingShader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-        lightingShader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-        lightingShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-        lightingShader.setFloat("spotLight.constant", 1.0f);
-        lightingShader.setFloat("spotLight.linear", 0.09f);
-        lightingShader.setFloat("spotLight.quadratic", 0.032f);
-        lightingShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-        lightingShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+        setVec3(lightingShader, "spotLight.position", camera.Position);
+        setVec3(lightingShader, "spotLight.direction", camera.Front);
+        setVec3(lightingShader, "spotLight.ambient", 0.0f, 0.0f, 0.0f);
+        setVec3(lightingShader, "spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+        setVec3(lightingShader, "spotLight.specular", 1.0f, 1.0f, 1.0f);
+        setFloat(lightingShader, "spotLight.constant", 1.0f);
+        setFloat(lightingShader, "spotLight.linear", 0.09f);
+        setFloat(lightingShader, "spotLight.quadratic", 0.032f);
+        setFloat(lightingShader, "spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+        setFloat(lightingShader, "spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
-        lightingShader.setMat4("projection", projection);
-        lightingShader.setMat4("view", view);
+        setMat4(lightingShader, "projection", projection);
+        setMat4(lightingShader, "view", view);
 
         // world transformation
         glm::mat4 model = glm::mat4(1.0f);
-        lightingShader.setMat4("model", model);
+        setMat4(lightingShader, "model", model);
 
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, *diffuseMap->getTexture());
+        glBindTexture(GL_TEXTURE_2D, diffuseMap.texture);
         
         // bind specular map
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, *specularMap->getTexture());
+        glBindTexture(GL_TEXTURE_2D, specularMap.texture);
         
         glBindVertexArray(cubeVAO.pntr);
         //dont know why this works have tried to do objList[i].lastpos.x but breaks
@@ -244,9 +247,9 @@ int main(int argc, char* argv[]) {
         }
 
         // also draw the lamp object(s)
-        lightCubeShader.use();
-        lightCubeShader.setMat4("projection", projection);
-        lightCubeShader.setMat4("view", view);
+        use(lightCubeShader);
+        setMat4(lightCubeShader, "projection", projection);
+        setMat4(lightCubeShader, "view", view);
     
         // we now draw as many light bulbs as we have point lights.
         glBindVertexArray(lightCubeVAO.pntr);

@@ -45,12 +45,6 @@ VertArray.o = $(objDir)/VertArray.o
 Shader.cpp = $(classDir)/Shader/Shader.cpp
 Shader.o = $(objDir)/Shader.o
 
-Texture.cpp = $(classDir)/Texture/Texture.cpp
-Texture.o = $(objDir)/Texture.o
-
-Camera.cpp = $(classDir)/Camera/Camera.cpp
-Camera.o = $(objDir)/Camera.o
-
 Object.cpp = $(classDir)/Object/Object.cpp
 Object.o = $(objDir)/Object.o
 
@@ -66,7 +60,7 @@ execute = $(outDir)/main
 
 
 
-all : main gl init vertBuffer vertArray shader texture camera object
+all : main gl init vertBuffer vertArray object
 
 
 #external dependencies
@@ -95,23 +89,14 @@ vertBuffer : $(VertBuffer.cpp)
 vertArray : $(VertArray.cpp)
 	$(CC) -o $(VertArray.o) -c $(VertArray.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
 
-shader : $(Shader.cpp)
-	$(CC) -o $(Shader.o) -c $(Shader.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
-
-texture : $(Texture.cpp)
-	$(CC) -o $(Texture.o) -c $(Texture.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
-
 object : $(Object.cpp)
 	$(CC) -o $(Object.o) -c $(Object.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
-
-camera : $(Camera.cpp)
-	$(CC) -o $(Camera.o) -c $(Camera.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
 
 
 #other steps
 
 link :
-	$(CC) -o $(execute) $(main.o) $(init.o) $(Object.o) $(VertBuffer.o) $(VertArray.o) $(Shader.o) $(Camera.o) $(Texture.o) $(gl.o) $(LIBRARY_PATHS) $(LINKER_FLAGS)
+	$(CC) -o $(execute) $(main.o) $(init.o) $(Object.o) $(VertBuffer.o) $(VertArray.o) $(gl.o) $(LIBRARY_PATHS) $(LINKER_FLAGS)
 
 pack :
 	$(packer) $(execute).exe --all-methods
