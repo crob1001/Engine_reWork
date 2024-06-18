@@ -6,9 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "../../texture.h"
-#include "../../functs/textureFuncts.h"
 #include "../../shader.h"
-#include "../../functs/shaderFuncts.h"
 #include "../VertArray/VertArray.hpp"
 
 class Object {

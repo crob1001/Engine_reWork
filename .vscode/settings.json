@@ -95,7 +95,8 @@
         "valarray": "cpp",
         "bitset": "cpp",
         "regex": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "glm.hpp": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

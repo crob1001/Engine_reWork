@@ -69,6 +69,6 @@ void Object::update() {
 
 void Object::draw(Shader* shader) {
     Object::update();
-    setMat4(*shader, "model", this->model);
+    shader->setMat4("model", this->model);
     glDrawArrays(GL_TRIANGLES, 0, this->vertAmt);
 }
