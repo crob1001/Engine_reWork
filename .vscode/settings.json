@@ -96,7 +96,8 @@
         "bitset": "cpp",
         "regex": "cpp",
         "semaphore": "cpp",
-        "glm.hpp": "c"
+        "glm.hpp": "c",
+        "init.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

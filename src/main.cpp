@@ -35,7 +35,7 @@ enum MODE {
 };
 
 
-#include "functs/init/init.hpp"
+#include "functs/init.h"
 // #include "functs/readFile/readFile.hpp"
 
 #include "Camera.h"

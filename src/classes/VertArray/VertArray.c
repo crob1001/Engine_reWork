@@ -1,8 +1,5 @@
 #include "VertArray.hpp"
 
-#include <glad/gl.h>
-#include <GLFW/glfw3.h>
-
  VertArray::VertArray() {
     glGenVertexArrays(1, &pntr);
 }

@@ -60,7 +60,7 @@ execute = $(outDir)/main
 
 
 
-all : main gl init vertBuffer vertArray object
+all : main gl vertBuffer vertArray object
 
 
 #external dependencies
@@ -74,8 +74,8 @@ gl : $(gl.c)
 main : $(main.cpp)
 	$(CC) -o $(main.o) -c $(main.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
 
-init : $(init.cpp)
-	$(CC) -o $(init.o) -c $(init.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
+# init : $(init.c)
+# 	$(CC) -o $(init.o) -c $(init.c) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
 
 readFile : $(readFile.cpp)
 	$(CC) -o $(readFile.o) -c $(readFile.cpp) $(INCLUDE_PATHS) $(COMPILER_FLAGS)
@@ -96,7 +96,7 @@ object : $(Object.cpp)
 #other steps
 
 link :
-	$(CC) -o $(execute) $(main.o) $(init.o) $(Object.o) $(VertBuffer.o) $(VertArray.o) $(gl.o) $(LIBRARY_PATHS) $(LINKER_FLAGS)
+	$(CC) -o $(execute) $(main.o) $(Object.o) $(VertBuffer.o) $(VertArray.o) $(gl.o) $(LIBRARY_PATHS) $(LINKER_FLAGS)
 
 pack :
 	$(packer) $(execute).exe --all-methods
